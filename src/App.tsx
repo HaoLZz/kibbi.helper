@@ -1,15 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+    <SCAppContainer>
+      <header>
+        <p></p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -19,8 +14,17 @@ function App() {
           Learn React
         </a>
       </header>
-    </div>
+    </SCAppContainer>
   );
 }
+
+const SCAppContainer = styled.div`
+  max-width: 1440px;
+  margin: 100px auto;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default App;
