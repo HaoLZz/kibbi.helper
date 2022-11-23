@@ -2,6 +2,10 @@
 
 For creating jobs-in-[City] marketing link
 
+### App Link
+
+[Kibbi.helper](https://haolzz.github.io/kibbi.helper/)
+
 ## How to use
 
 ### Generate link
@@ -13,4 +17,4 @@ For creating jobs-in-[City] marketing link
 
 - Click "Reset" button to clear all input fields
 
-![image](https://user-images.githubusercontent.com/38929940/203450883-56e11e76-3483-4ae0-8c91-ec3c527a0032.png)
+![image](https://user-images.githubusercontent.com/38929940/203453313-2697ae01-25a2-4938-ae8a-96668c26a227.png)
