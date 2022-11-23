@@ -84,6 +84,14 @@ function App() {
         >
           {"-->"} Kibbi Applicant Webapp
         </a>
+        <br />
+        <a
+          href="https://github.com/HaoLZz/kibbi.helper#readme"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {"-->"} How to Use
+        </a>
       </header>
       <SCMain>
         <SCForm onSubmit={handleSubmit} onReset={handleReset}>
