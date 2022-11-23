@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { CA_UNIT_CITY, CA_UNIT_STATE } from "./enum";
+import { isValidURL, writeToClipboard } from "./helper";
 
 const provinces = ["", ...CA_UNIT_STATE];
 const DEFAULT_DOMAIN = "https://applicant.mykibbi.com/";
@@ -11,6 +12,8 @@ function App() {
   const [city, setCity] = useState("");
 
   const [cities, setCities] = useState<string[]>([]);
+
+  const [link, setLink] = useState("");
 
   const handleDomainChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,9 +44,26 @@ function App() {
     []
   );
 
-  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  }, []);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!province || !city) {
+        alert("Please select a province or city");
+        return;
+      }
+      if (isValidURL(domain)) {
+        const url = `${domain}list/jobs-in-${city}?state=${province}&city=${city}`;
+        setLink(url);
+        const msg = (await writeToClipboard(url))
+          ? "Marketing Link Copied to Your Clipboard"
+          : "Please Copy Marketing Link";
+        alert(msg);
+      } else {
+        alert("Invalid Kibbi Applicant Domaim!");
+      }
+    },
+    [city, domain, province]
+  );
 
   const handleReset = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,6 +71,7 @@ function App() {
     setCity("");
     setProvince("");
     setCities([]);
+    setLink("");
   }, []);
   return (
     <SCAppContainer>
@@ -72,6 +93,8 @@ function App() {
             id="domain"
             placeholder="Kibbi Applicant Website Address"
             value={domain}
+            type="url"
+            required
             onChange={handleDomainChange}
           />
           <SCLabel htmlFor="province">Province</SCLabel>
@@ -103,6 +126,15 @@ function App() {
                 </option>
               ))}
           </SCSelect>
+          <SCLabel htmlFor="Link">Marketing Link</SCLabel>
+          <SCInput
+            name="Link"
+            id="Link"
+            placeholder={`${DEFAULT_DOMAIN}list/jobs-in-[City]`}
+            value={link}
+            type="url"
+            onChange={(f) => f}
+          />
           <SCBtnContainer>
             <SCButton type="submit">Generate</SCButton>
             <SCButton type="reset">Reset</SCButton>

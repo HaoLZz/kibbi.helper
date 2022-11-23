@@ -10,3 +10,16 @@ export function isValidURL(str: string) {
   }
   return url.protocol === "http:" || url.protocol === "https:";
 }
+
+/**
+ * Write text into clipboard
+ */
+export async function writeToClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
