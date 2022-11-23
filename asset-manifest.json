@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/kibbi.helper/static/css/main.f25e6a84.css",
+    "main.js": "/kibbi.helper/static/js/main.185e0bc0.js",
+    "index.html": "/kibbi.helper/index.html",
+    "main.f25e6a84.css.map": "/kibbi.helper/static/css/main.f25e6a84.css.map",
+    "main.185e0bc0.js.map": "/kibbi.helper/static/js/main.185e0bc0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f25e6a84.css",
+    "static/js/main.185e0bc0.js"
+  ]
+}
