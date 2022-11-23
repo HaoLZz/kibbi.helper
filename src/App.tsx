@@ -1,6 +1,57 @@
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
+import { CA_UNIT_CITY, CA_UNIT_STATE } from "./enum";
+
+const provinces = ["", ...CA_UNIT_STATE];
+const DEFAULT_DOMAIN = "https://applicant.mykibbi.com/";
 
 function App() {
+  const [domain, setDomain] = useState(DEFAULT_DOMAIN);
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
+
+  const [cities, setCities] = useState<string[]>([]);
+
+  const handleDomainChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setDomain(e.target.value);
+    },
+    []
+  );
+
+  const handleProvinceChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const province = e.target.value;
+      if (!!province) {
+        setCities(["", ...CA_UNIT_CITY[e.target.value].sort()]);
+      } else {
+        setCities([]);
+      }
+
+      setCity("");
+      setProvince(e.target.value);
+    },
+    []
+  );
+
+  const handleCityChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setCity(e.target.value);
+    },
+    []
+  );
+
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  }, []);
+
+  const handleReset = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setDomain(DEFAULT_DOMAIN);
+    setCity("");
+    setProvince("");
+    setCities([]);
+  }, []);
   return (
     <SCAppContainer>
       <header>
@@ -14,25 +65,44 @@ function App() {
         </a>
       </header>
       <SCMain>
-        <SCForm>
+        <SCForm onSubmit={handleSubmit} onReset={handleReset}>
           <SCLabel htmlFor="domain">Kibbi Applicant Domain</SCLabel>
           <SCInput
             name="domain"
             id="domain"
             placeholder="Kibbi Applicant Website Address"
+            value={domain}
+            onChange={handleDomainChange}
           />
           <SCLabel htmlFor="province">Province</SCLabel>
           <SCSelect
             name="province"
             id="province"
-            placeholder="Select a province"
-          ></SCSelect>
+            value={province}
+            onChange={handleProvinceChange}
+          >
+            {provinces.length &&
+              provinces.map((province) => (
+                <option value={province} key={province}>
+                  {province}
+                </option>
+              ))}
+          </SCSelect>
           <SCLabel htmlFor="city">City</SCLabel>
           <SCSelect
             name="city"
             id="city"
-            placeholder="Select a city"
-          ></SCSelect>
+            value={city}
+            onChange={handleCityChange}
+            disabled={!province}
+          >
+            {cities.length &&
+              cities.map((city) => (
+                <option value={city} key={city}>
+                  {city}
+                </option>
+              ))}
+          </SCSelect>
           <SCBtnContainer>
             <SCButton type="submit">Generate</SCButton>
             <SCButton type="reset">Reset</SCButton>
